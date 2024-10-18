@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>slack_notification</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/bin/bash</string>
+            <string>-c</string>
+            <string>
+                #!/bin/bash
+
+                # Set your Slack bot token and channel
+                SLACK_TOKEN="zQWjMtVaiyHjpeIqd5d7Mt2G"
+                SLACK_CHANNEL="updatemunki"
+
+                # Set the notification message
+                MESSAGE="Hello from Mac!"
+
+                # Function to send notification to Slack bot
+                send_notification() {
+                    curl -X POST \
+                       https://hooks.slack.com/services/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 \
+                        -H 'Authorization: Bearer '${SLACK_TOKEN} \
+                        -H 'Content-Type: application/json' \
+                        -d '{"channel": "'${SLACK_CHANNEL}'", "text": "'${MESSAGE}'"}'
+                }
+
+                # Run the send notification function
+                send_notification
+            </string>
+        </array>
+    </dict>
+</plist>
