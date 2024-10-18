@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the latest version of Lark.
+	For Apple Silicon:
+    ARCH: arm64, SUPPORTED_ARCHITECTURE: arm64
+
+    For Intel:
+    ARCH: x64, SUPPORTED_ARCHITECTURE: x86_64
+	</string>
+	<key>Identifier</key>
+	<string>com.github.KhanhaKP.munki-tvlk.download.Lark-Suite</string>
+	<key>Input</key>
+	<dict>
+		<key>APP_FILENAME</key>
+		<string>LarkSuite</string>
+		<key>NAME</key>
+		<string>Lark Suite(Intel)</string>
+		<key>ARCH</key>
+        <string>x64</string>
+		<key>version</key>
+        <string>7.24.5</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>2.3</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>filename</key>
+				<string>%NAME%_%version%.dmg</string>
+				<key>url</key>
+				<string>https:\/\/sf16-va.larksuitecdn.com\/obj\/lark-artifact-storage\/([\w\.]+)\/Lark-darwin_x64-[\d\.]+-signed.dmg</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_path</key>
+				<string>%pathname%/LarkSuite.app</string>
+				<key>requirement</key>
+				<string>identifier "com.larksuite.larkApp" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = JBRN9C6V7T</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_plist_path</key>
+				<string>%pathname%/LarkSuite.app/Contents/Info.plist</string>
+				<key>plist_version_key</key>
+				<string>CFBundleVersion</string>
+			</dict>
+			<key>Processor</key>
+			<string>Versioner</string>
+		</dict>
+	</array>
+</dict>
+</plist>
