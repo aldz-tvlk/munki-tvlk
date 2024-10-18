@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of pgAdmin4 and imports it into Munki.
+
+For the SUPPORTED_ARCH variable use
+
+- "arm64" for Apple Silicon
+- "x86_64" for Intel
+
+</string>
+    <key>Identifier</key>
+    <string>com.github.KhanhaKP.munki-tvlk.download.PGAdmin4</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>pgAdmin4 (Apple)</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/%NAME%</string>
+        <key>SUPPORTED_ARCH</key>
+        <string>arm64</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>Testing</string>
+            </array>
+            <key>description</key>
+            <string>pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL, the most advanced Open Source database in the world.  pgAdmin is designed to answer the needs of all users, from writing simple SQL queries to developing complex databases. The graphical interface may be run on the desktop or on a web server and supports all common PostgreSQL features. The application includes a syntax highlighting SQL editor.</string>
+            <key>developer</key>
+            <string>PostgreSQL Global Development Group</string>
+            <key>display_name</key>
+            <string>pgAdmin4 (Apple)</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>supported_architectures</key>
+            <array>
+                <string>%SUPPORTED_ARCH%</string>
+            </array>
+            <key>unattended_install</key>
+            <true/>
+            <key>unattended_uninstall</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.0.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.KhanhaKP.munki-tvlk.download.PGAdmin4</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
