@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of Appium-Inspector.
+        For Apple Silicon:
+        ARCH: arm64, SUPPORTED_ARCHITECTURE: arm64
+
+        For Intel:
+        ARCH: x64, SUPPORTED_ARCHITECTURE: x86_64
+    </string>
+    <key>Identifier</key>
+    <string>com.github.munki-tvlk.download.Appium-Inspector</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Appium Inspector(Apple)</string>
+        <key>ARCH</key>
+        <string>arm64</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>2.3</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>asset_regex</key>
+                <string>Appium-Inspector-([0-9]+.[0-9]+.[0-9]+)-mac-%ARCH%.dmg</string>
+                <key>github_repo</key>
+                <string>appium/appium-inspector</string>
+            </dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%-%version%.dmg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>input_path</key>
+                <string>%pathname%/Appium Inspector.app</string>
+                <key>requirement</key>
+                <string>identifier "identifier "io.appium.inspector" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UY52UFTVTM"</string>
+			</dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+            	<key>input_plist_path</key>
+				<string>%pathname%/Appium Inspector.app/Contents/Info.plist</string>
+				<key>plist_version_key</key>
+				<string>CFBundleShortVersionString</string>
+			</dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+        </dict>
+    </array>
+</dict>
+</plist>
