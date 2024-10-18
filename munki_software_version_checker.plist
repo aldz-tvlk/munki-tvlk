@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>munki_software_version_checker</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/bin/bash</string>
+            <string>-c</string>
+            <string>
+                #!/bin/bash
+
+                # Set your Slack bot token and channel
+                SLACK_TOKEN="https://hooks.slack.com/services/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"
+                SLACK_CHANNEL="updatemunki"
+
+                # Set the software version to check
+                SOFTWARE_NAME="Homebrew"
+                SOFTWARE_VERSION="4.3.18"
+
+                # Function to check software version in Munki Admin
+                check_software_version() {
+                    # Use the `munkiadmin` command to get the software version
+                    version=$(munkiadmin --software --name ${SOFTWARE_NAME} --version)
+                    echo ${version}
+                }
+
+                # Function to send notification to Slack bot
+                send_notification() {
+                    curl -X POST \
+                        https://slack.com/api/chat.postMessage \
+                        -H 'Authorization: Bearer '${SLACK_TOKEN} \
+                        -H 'Content-Type: application/json' \
+                        -d '{"channel": "'${SLACK_CHANNEL}'", "text": "'${1}'"}'
+                }
+
+                # Main function
+                main() {
+                    current_version=$(check_software_version)
+                    if [ "${current_version}" != "${SOFTWARE_VERSION}" ]; then
+                        message="${SOFTWARE_NAME} version ${current_version} is not the latest version (${SOFTWARE_VERSION})."
+                        send_notification "${message}"
+                    fi
+                }
+
+                # Run the main function
+                main
+            </string>
+        </array>
+    </dict>
+</plist>
