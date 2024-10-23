@@ -11,10 +11,10 @@
         <key>NAME</key>
         <string>SublimeText4</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://www.sublimetext.com/download_thanks?target=mac</string>
+        <string>https://www.sublimetext.com/download_thanks</string>
     </dict>
     <key>MinimumVersion</key>
-    <string>0.5.1</string>
+    <string>1.0</string>
     <key>Process</key>
     <array>
         <!-- Step 1: Download the zip file -->
