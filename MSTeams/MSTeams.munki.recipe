@@ -3,138 +3,37 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads Microsoft Teams and imports it to Munki.</string>
+    <string>Downloads and imports the latest version of Microsoft Teams pkg into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.munki-tvlk.munki.MSTeams</string>
-    <key>ParentRecipe</key>
-    <string>com.github.munki-tvlk.download.MSTeams</string>
+    <string>com.github.munki-tvlk.MSTeams.munki</string>
     <key>MinimumVersion</key>
-    <string>0.6.0</string>
+    <string>0.2.3</string>
+    <key>ParentRecipe</key>
+    <string>com.github.munki-tvlk.download.MSTeams</string> <!-- Menyatakan bahwa recipe ini bergantung pada download.recipe -->
     <key>Input</key>
     <dict>
-        <key>MUNKI_NAME</key>
-        <string>%NAME%</string>
         <key>MUNKI_REPO_SUBDIR</key>
-        <string>apps/Office2019/</string>
-        <key>MUNKI_CATEGORY</key>
-        <string>Office 2016</string>
-        <key>MUNKI_DEVELOPER</key>
-        <string>Microsoft</string>
-        <key>DISPLAY_NAME</key>
-        <string>Microsoft Teams</string>
-        <key>MUNKI_DESCRIPTION</key>
-        <string>Microsoft Teams is the new chat-centered workspace in Office 365. Keep all your content, tools, people, and conversations together in one place.</string>
-        <key>VERSIONTYPE</key>
-        <string>CFBundleShortVersionString</string>
+        <string>apps/MSTeams</string>
+        <key>NAME</key>
+        <string>MSTeams</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
             <array>
-                <string>testing</string>
+                <string>production</string>
             </array>
+            <key>category</key>
+            <string>Communication</string>
             <key>description</key>
-            <string>%MUNKI_DESCRIPTION%</string>
+            <string>Microsoft Teams is a collaborative tool designed to bring teams together with chat, meetings, and file sharing.</string>
             <key>display_name</key>
-            <string>%DISPLAY_NAME%</string>
-            <key>name</key>
-            <string>%MUNKI_NAME%</string>
+            <string>Microsoft Teams</string>
             <key>unattended_install</key>
             <true/>
-            <key>category</key>
-            <string>%MUNKI_CATEGORY%</string>
-            <key>developer</key>
-            <string>%MUNKI_DEVELOPER%</string>
         </dict>
     </dict>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-               <key>destination_path</key>
-               <string>%RECIPE_CACHE_DIR%/downloads/unpack</string>
-               <key>flat_pkg_path</key>
-               <string>%pathname%</string>
-            </dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-               <key>pattern</key>
-               <string>%RECIPE_CACHE_DIR%/downloads/unpack/*Teams*.pkg</string>
-            </dict>
-            <key>Processor</key>
-            <string>FileFinder</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-                <key>pkgroot</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/Applications</string>
-                <key>pkgdirs</key>
-                <dict>
-                    <key>Applications</key>
-                    <string>0755</string>
-                </dict>
-            </dict>
-            <key>Processor</key>
-            <string>PkgRootCreator</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
-               <key>destination_path</key>
-               <string>%RECIPE_CACHE_DIR%/downloads/Applications</string>
-               <key>pkg_payload_path</key>
-               <string>%found_filename%/Payload</string>
-            </dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
-            <key>Arguments</key>
-            <dict>
-               <key>input_plist_path</key>
-               <string>%RECIPE_CACHE_DIR%/downloads/Applications/Microsoft Teams Classic.app/Contents/Info.plist</string>
-               <key>plist_version_key</key>
-               <string>%VERSIONTYPE%</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-            <key>Arguments</key>
-            <dict>
-                <key>additional_pkginfo</key>
-                <dict>
-                    <key>version</key>
-                    <string>%version%</string>
-                </dict>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiInstallsItemsCreator</string>
-            <key>Arguments</key>
-            <dict>
-                <key>faux_root</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/</string>
-                <key>installs_item_paths</key>
-                <array>
-                    <string>/Applications/Microsoft Teams Classic.app</string>
-                </array>
-                <key>version_comparison_key</key>
-                <string>%VERSIONTYPE%</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
         <dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
@@ -144,20 +43,23 @@
                 <string>%pathname%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>pkginfo</key>
+                <dict>
+                    <key>catalogs</key>
+                    <array>
+                        <string>production</string>
+                    </array>
+                    <key>category</key>
+                    <string>Communication</string>
+                    <key>description</key>
+                    <string>Microsoft Teams is a collaborative tool designed to bring teams together with chat, meetings, and file sharing.</string>
+                    <key>display_name</key>
+                    <string>Microsoft Teams</string>
+                    <key>unattended_install</key>
+                    <true/>
+                </dict>
             </dict>
         </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PathDeleter</string>
-            <key>Arguments</key>
-            <dict>
-               <key>path_list</key>
-               <array>
-                  <string>%RECIPE_CACHE_DIR%/downloads/unpack</string>
-                  <string>%RECIPE_CACHE_DIR%/downloads/Applications</string>
-               </array>
-            </dict>
-         </dict>
     </array>
 </dict>
 </plist>
