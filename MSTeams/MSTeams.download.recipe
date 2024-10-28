@@ -19,14 +19,14 @@
     </dict>
     <key>Process</key>
     <array>
-        <!-- <dict>
+        <dict>
             <key>Processor</key>
             <string>com.github.apettinen.SharedProcessors/MSTeamsURLProvider</string>
             <key>environment</key>
             <string>%MSTEAMS_ENVIRONMENT%</string>
             <key>platform</key>
             <string>%MSTEAMS_PLATFORM%</string>
-        </dict> -->
+        </dict>
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
