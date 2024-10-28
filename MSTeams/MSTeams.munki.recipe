@@ -9,24 +9,26 @@
     <key>MinimumVersion</key>
     <string>0.2.3</string>
     <key>ParentRecipe</key>
-    <string>com.github.munki-tvlk.download.MSTeams</string> <!-- Menyatakan bahwa recipe ini bergantung pada download.recipe -->
+    <string>com.github.munki-tvlk.download.MSTeams</string>
     <key>Input</key>
     <dict>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/MSTeams</string>
         <key>NAME</key>
-        <string>MSTeams</string>
+        <string>Microsoft Teams</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
             <array>
-                <string>production</string>
+                <string>testing</string>
             </array>
             <key>category</key>
             <string>Communication</string>
             <key>description</key>
             <string>Microsoft Teams is a collaborative tool designed to bring teams together with chat, meetings, and file sharing.</string>
             <key>display_name</key>
+            <string>Microsoft Teams</string>
+            <key>name</key>
             <string>Microsoft Teams</string>
             <key>unattended_install</key>
             <true/>
@@ -47,13 +49,15 @@
                 <dict>
                     <key>catalogs</key>
                     <array>
-                        <string>production</string>
+                        <string>testing</string>
                     </array>
                     <key>category</key>
                     <string>Communication</string>
                     <key>description</key>
                     <string>Microsoft Teams is a collaborative tool designed to bring teams together with chat, meetings, and file sharing.</string>
                     <key>display_name</key>
+                    <string>Microsoft Teams</string>
+                    <key>name</key>
                     <string>Microsoft Teams</string>
                     <key>unattended_install</key>
                     <true/>
