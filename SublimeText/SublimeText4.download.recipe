@@ -11,7 +11,7 @@
         <key>NAME</key>
         <string>SublimeText4</string>
         <key>DOWNLOAD_URL</key>
-        <string>https://www.sublimetext.com/download_thanks?target=mac</string>
+        <string>https://www.sublimetext.com/download_thanks?target=mac#direct-downloads</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0</string>
