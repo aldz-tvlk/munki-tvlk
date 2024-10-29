@@ -3,44 +3,56 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads the current release version of Sublime Text 4 from a direct link (zip format) and extracts the .app file.</string>
+    <string>Downloads the current release version of Sublime Text 4</string>
     <key>Identifier</key>
     <string>com.github.munki-tvlk.SublimeText.SublimeText4.download</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>SublimeText4</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://www.sublimetext.com/download_thanks?target=mac#direct-downloads</string>
+        <key>SEARCH_URL</key>
+        <string>https://www.sublimetext.com/download_thanks</string>
+        <key>SEARCH_PATTERN</key>
+        <string>&lt;a href="(https:\/\/download\.sublimetext\.com\/sublime_text_build_[0-9a-zA-Z]*_mac\.zip)"&gt;</string>
     </dict>
     <key>MinimumVersion</key>
     <string>1.0</string>
     <key>Process</key>
     <array>
-        <!-- Step 1: Download the zip file -->
+        <!-- Step 1: Download the file -->
         <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
-                <key>filename</key>
-                <string>%NAME%.zip</string>
+                <string>%SEARCH_URL%</string>
+                <key>re_pattern</key>
+                <string>%SEARCH_PATTERN%</string>
             </dict>
+        </dict>
+        <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
-        </dict>
-
-        <!-- Step 2: Unarchive the zip file -->
-        <dict>
             <key>Arguments</key>
             <dict>
-                <key>archive_path</key>
-                <string>%pathname%</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%</string>
+                <key>url</key>
+                <string>%match%</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <!-- Step 2: Unarchive the zip file -->
+        <dict>
             <key>Processor</key>
             <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>purge_destination</key>
+                <true/>
+            </dict>
         </dict>
 
         <!-- Step 3: Verify code signature -->
