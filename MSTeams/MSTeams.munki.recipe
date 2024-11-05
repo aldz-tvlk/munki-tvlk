@@ -46,22 +46,7 @@
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
                 <key>pkginfo</key>
-                <dict>
-                    <key>catalogs</key>
-                    <array>
-                        <string>testing</string>
-                    </array>
-                    <key>category</key>
-                    <string>Communication</string>
-                    <key>description</key>
-                    <string>Microsoft Teams is a collaborative tool designed to bring teams together with chat, meetings, and file sharing.</string>
-                    <key>display_name</key>
-                    <string>Microsoft Teams</string>
-                    <key>name</key>
-                    <string>Microsoft Teams</string>
-                    <key>unattended_install</key>
-                    <true/>
-                </dict>
+                <string>%pkginfo%</string>
             </dict>
         </dict>
     </array>
