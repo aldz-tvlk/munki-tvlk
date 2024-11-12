@@ -50,7 +50,7 @@
 					<true />
 				</dict>
 				<key>Processor</key>
-				<string>Unarchiver</string>
+				<string>Unzipper</string>
 			</dict>
 			<dict>
 				<key>Arguments</key>
