@@ -42,7 +42,7 @@
 			</dict>
 			<dict>
 				<key>Processor</key>
-				<string>Unzipper</string>
+				<string>Unarchiver</string>
 			</dict>
 			<dict>
 				<key>Arguments</key>
