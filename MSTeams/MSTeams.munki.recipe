@@ -47,6 +47,7 @@
                     <key>repo_subdirectory</key>
                     <string>%MUNKI_REPO_SUBDIR%</string>
                     <key>force_import</key>
+                    <true />
                 </dict>
             </dict>
         </array>
