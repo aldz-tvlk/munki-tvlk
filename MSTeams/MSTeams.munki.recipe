@@ -46,8 +46,6 @@
                     <string>%pathname%</string>
                     <key>repo_subdirectory</key>
                     <string>%MUNKI_REPO_SUBDIR%</string>
-                    <key>pkginfo</key>
-                    <string>%pkginfo%</string>
                 </dict>
             </dict>
         </array>
