@@ -28,9 +28,9 @@
                 <string>Microsoft Teams is a collaborative tool designed to bring teams together
                     with chat, meetings, and file sharing.</string>
                 <key>display_name</key>
-                <string>Microsoft Teams</string>
+                <string>MicrosoftTeams</string>
                 <key>name</key>
-                <string>Microsoft Teams</string>
+                <string>MicrosoftTeams</string>
                 <key>unattended_install</key>
                 <true />
             </dict>
