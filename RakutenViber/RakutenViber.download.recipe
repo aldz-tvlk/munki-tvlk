@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest version of Rakuten Viber.</string>
+        <key>Identifier</key>
+        <string>com.github.munki-tvlk.download.RakutenViber</string>
+        <key>MinimumVersion</key>
+        <string>0.6.0</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>Rakuten Viber</string>
+        </dict>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>URLDownloader</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>url</key>
+                    <string>https://download.viber.com/desktop/mac/online/Viber.dmg</string> <!-- Link resmi
+                    unduhan Rakuten Viber untuk macOS -->
+                    <key>filename</key>
+                    <string>%NAME%.dmg</string>
+                    <key>curl_opts</key>
+                    <array>
+                        <string>--no-alpn</string>
+                    </array>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>EndOfCheckPhase</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_path</key>
+                    <string>%pathname%</string>
+                    <key>expected_authority_names</key>
+                    <array>
+                        <string>Developer ID Installer: Microsoft Corporation (UBF8T346G9)</string>
+                        <string>Developer ID Certification Authority</string>
+                        <string>Apple Root CA</string>
+                    </array>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
