@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads and imports the latest version of Rakuten Viber dmg into Munki.</string>
+        <key>Identifier</key>
+        <string>com.github.munki-tvlk.RakutenViber.munki</string>
+        <key>MinimumVersion</key>
+        <string>0.2.3</string>
+        <key>ParentRecipe</key>
+        <string>com.github.munki-tvlk.download.RakutenViber</string>
+        <key>Input</key>
+        <dict>
+            <key>MUNKI_REPO_SUBDIR</key>
+            <string>apps/Rakuten Viber</string>
+            <key>NAME</key>
+            <string>Rakuten Viber</string>
+            <key>pkginfo</key>
+            <dict>
+                <key>catalogs</key>
+                <array>
+                    <string>Testing</string>
+                </array>
+                <key>category</key>
+                <string>Communication</string>
+                <key>description</key>
+                <string>Viber is Free and secure calls and messages to anyone, anywhere Keep your
+                    conversations going no matter where you are.</string>
+                <key>display_name</key>
+                <string>Rakuten Viber</string>
+                <key>name</key>
+                <string>Rakuten Viber</string>
+                <key>unattended_install</key>
+                <true />
+            </dict>
+        </dict>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>MunkiImporter</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>pkg_path</key>
+                    <string>%pathname%</string>
+                    <key>repo_subdirectory</key>
+                    <string>%MUNKI_REPO_SUBDIR%</string>
+                    <key>force_import</key>
+                    <true />
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
