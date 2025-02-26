@@ -1,15 +1,16 @@
-# JavaForOracle Installation Script
+#JRE
 
 $ExeFileName = "jre-8u441-windows-i586-iftw.exe"
 $installerPath = "C:\APP\"
 
-# Pastikan folder instalasi ada
+
+# Ensure the target user folder exists or create it if necessary
 if (-Not (Test-Path -Path $installerPath)) {
-    Write-Host "Creating folder: $installerPath"
+    Write-Host "Creating user folder: $installerPath"
     New-Item -Path $installerPath -ItemType Directory -Force
 }
 
-# Download URL 
+# Download url 
 $Url = "http://10.15.1.86:8081/repository/Windows/JavaForOracle/" + $ExeFileName
 $Username = 'nx-deploy'
 $Password = 'IT@DeployNexus22!!'
@@ -17,51 +18,52 @@ $SecPassword = ConvertTo-SecureString $Password -AsPlainText -Force
 $CredObject = New-Object System.Management.Automation.PSCredential ($Username, $SecPassword)
 $ExeFilePath = $installerPath + $ExeFileName
 
-# Jika file sudah ada, pastikan tidak digunakan sebelum dihapus
-if (Test-Path -Path $ExeFilePath -PathType Leaf) {
-    Write-Host "File sudah ada, mengecek apakah sedang digunakan..."
-    
-    # Cek apakah file sedang digunakan oleh proses lain
-    try {
-        Rename-Item -Path $ExeFilePath -NewName "$ExeFilePath.bak" -ErrorAction Stop
-        Remove-Item -Path "$ExeFilePath.bak" -Force -ErrorAction Stop
-        Write-Host "File tidak sedang digunakan, menghapus..."
-    } catch {
-        Write-Host "File sedang digunakan, menunggu proses selesai..."
-        Start-Sleep -Seconds 5
-        Stop-Process -Name "java" -Force -ErrorAction SilentlyContinue
-        Remove-Item -Path $ExeFilePath -Force -ErrorAction SilentlyContinue
+# Download file
+Invoke-WebRequest -UseBasicParsing -Uri $Url -OutFile $ExeFilePath -Credential $credObject
+
+#install
+Start-Process -Wait -FilePath $ExeFilePath -ArgumentList "/s" -NoNewWindow
+
+# Ambil username pengguna yang sedang login
+$loggedInUser = (Get-WmiObject -Class Win32_ComputerSystem).UserName
+$userName = $loggedInUser.Split('\')[-1]
+
+# Cari lokasi profil pengguna berdasarkan username
+$profilePath = (Get-WmiObject Win32_UserProfile | Where-Object { $_.LocalPath -match $userName }).LocalPath
+
+# Path ke file exception list Java
+$exceptionFile = "$profilePath\AppData\LocalLow\Sun\Java\Deployment\security\exception.sites"
+
+# Daftar URL yang akan ditambahkan ke exception list
+$exceptions = @(
+"https://ora.eci.traveloka.com",
+"https://id05oebs.tvlk-pay.cloud",
+"https://id04oebs.tvlk-pay.cloud",
+"https://id05oebs.mfc.traveloka.com",
+"https://id04oebsstaging.tvlk-pay.cloud",
+"https://id05oebsstaging.tvlk-pay.cloud",
+"https://ora.eci.staging-traveloka.com",
+"https://ora.eci.development-traveloka.com"
+)
+
+# Pastikan folder ada, jika tidak buat baru
+$directoryPath = Split-Path -Path $exceptionFile
+if (!(Test-Path $directoryPath)) {
+    New-Item -ItemType Directory -Path $directoryPath -Force
+}
+
+# Buat file jika belum ada
+if (!(Test-Path $exceptionFile)) {
+    New-Item -ItemType File -Path $exceptionFile -Force
+}
+
+# Tambahkan setiap URL jika belum ada di dalam file
+foreach ($url in $exceptions) {
+    if (!(Select-String -Path $exceptionFile -Pattern $url -SimpleMatch -Quiet)) {
+        Add-Content -Path $exceptionFile -Value $url
+    } else {
+        Write-Output "⚠️ Exception already exists: $url"
     }
 }
 
-# Unduh ulang file jika sebelumnya gagal
-Write-Host "Mengunduh file instalasi Java..."
-Invoke-WebRequest -UseBasicParsing -Uri $Url -OutFile $ExeFilePath -Credential $CredObject
-
-# Generate SHA256 Checksum dari file yang diunduh
-$GeneratedChecksum = (Get-FileHash -Algorithm SHA256 $ExeFilePath).Hash
-Write-Host "Generated Checksum: $GeneratedChecksum"
-
-# Masukkan hasil checksum ke dalam variabel EXPECTED_CHECKSUM
-$EXPECTED_CHECKSUM = $GeneratedChecksum  # Menggunakan checksum hasil perhitungan
-
-# Cek apakah file valid berdasarkan checksum
-if ((Get-FileHash -Algorithm SHA256 $ExeFilePath).Hash -ne $EXPECTED_CHECKSUM) {
-    Write-Host "Checksum tidak cocok, menghapus dan mengunduh ulang..."
-    Remove-Item -Path $ExeFilePath -Force -ErrorAction SilentlyContinue
-    Invoke-WebRequest -UseBasicParsing -Uri $Url -OutFile $ExeFilePath -Credential $CredObject
-} else {
-    Write-Host "Checksum valid, melanjutkan instalasi."
-}
-
-# Jalankan instalasi dengan mode silent
-Write-Host "Memulai instalasi Java..."
-Start-Process -Wait -FilePath $ExeFilePath -Argument "/S"
-
-# Verifikasi apakah Java sudah terinstal
-$JavaCheck = Get-Command "java.exe" -ErrorAction SilentlyContinue
-if ($JavaCheck) {
-    Write-Host "Java berhasil diinstal!"
-} else {
-    Write-Host "Instalasi Java gagal!"
-}
+Get-Content "$profilePath\AppData\LocalLow\Sun\Java\Deployment\security\exception.sites"
