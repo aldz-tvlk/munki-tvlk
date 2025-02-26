@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Dapatkan user yang sedang login
+loggedInUser=$(/bin/ls -l /dev/console | /usr/bin/awk '{ print $3 }')
+USER_HOME="/Users/$loggedInUser"
+
 # Fungsi untuk mengecek apakah aplikasi terinstal
 is_installed() {
     [ -d "$1" ]
@@ -12,9 +16,10 @@ remove_app() {
     echo "\n=== Menghapus $app_name ==="
     
     for path in "$@"; do
-        if [ -e "$path" ]; then
-            sudo rm -rf "$path"
-            echo "Menghapus: $path"
+        expanded_path="${path//~/$USER_HOME}"
+        if [ -e "$expanded_path" ]; then
+            sudo rm -rf "$expanded_path"
+            echo "Menghapus: $expanded_path"
         fi
     done
     echo "$app_name berhasil dihapus."
@@ -26,13 +31,13 @@ if is_installed "/Applications/Slack.app"; then
     pkill Slack
     remove_app "Slack" \
         "/Applications/Slack.app" \
-        "~/Library/Application Support/Slack" \
-        "~/Library/Caches/com.tinyspeck.slackmacgap" \
-        "~/Library/Containers/com.tinyspeck.slackmacgap" \
-        "~/Library/Preferences/com.tinyspeck.slackmacgap.plist" \
-        "~/Library/Saved Application State/com.tinyspeck.slackmacgap.savedState" \
-        "~/Library/Logs/Slack" \
-        "~/Library/PreferencesByHost/com.tinyspeck.slackmacgap.*"
+        "/Users/$loggedInUser/Library/Application Support/Slack" \
+        "/Users/$loggedInUser/Library/Caches/com.tinyspeck.slackmacgap" \
+        "/Users/$loggedInUser/Library/Containers/com.tinyspeck.slackmacgap" \
+        "/Users/$loggedInUser/Library/Preferences/com.tinyspeck.slackmacgap.plist" \
+        "/Users/$loggedInUser/Library/Saved Application State/com.tinyspeck.slackmacgap.savedState" \
+        "/Users/$loggedInUser/Library/Logs/Slack" \
+        "/Users/$loggedInUser/Library/PreferencesByHost/com.tinyspeck.slackmacgap.*"
 else
     echo "Slack tidak ditemukan, melewati langkah ini."
 fi
@@ -76,13 +81,15 @@ if is_installed "/Library/Application Support/Pulse Secure/Pulse/Uninstall.app";
         "/Library/LaunchAgents/net.pulsesecure.*" \
         "/Library/Preferences/net.pulsesecure.*" \
         "/Users/Shared/Pulse" \
-        "~/Library/PreferencesByHost/net.pulsesecure.*"
+        "/Users/$loggedInUser/Library/PreferencesByHost/net.pulsesecure.*" \
+        "/Users/$loggedInUser/Library/Application Support/Pulse Secure" \
+        "/Users/$loggedInUser/Library/Logs/Pulse Secure"
 else
     echo "Pulse Secure tidak ditemukan, melewati langkah ini."
 fi
 
-# Gunakan find untuk memastikan tidak ada file residual
-find ~/Library -iname "*slack*" -exec sudo rm -rf {} +
-find /Library -iname "*pulsesecure*" -exec sudo rm -rf {} +
+# Gunakan find untuk memastikan tidak ada file residual di direktori pengguna yang login
+find "/Users/$loggedInUser/Library" -iname "*slack*" -exec sudo rm -rf {} +
+find "/Users/$loggedInUser/Library" -iname "*pulsesecure*" -exec sudo rm -rf {} +
 
 echo "\nProses selesai. Slack dan Pulse Secure telah diperiksa dan dihapus jika ditemukan."
