@@ -16,13 +16,13 @@ awsPath="/Users/$loggedInUser/.aws"
 if [ -d "$awsPath" ]; then
     echo "Folder .aws ditemukan di $awsPath"
     
-    # Mengubah permission menjadi read & write untuk user
-    chmod -R u+rw "$awsPath"
-    
-    # Mengubah owner ke user yang sedang login
-    chown -R "$loggedInUser" "$awsPath"
+    # Mengubah permission menjadi read & write untuk user (tanpa permission "Custom")
+    chmod -R 700 "$awsPath"
 
-    echo "Permission untuk .aws telah diubah menjadi read & write untuk $loggedInUser."
+    # Mengubah owner ke user yang sedang login
+    chown -R "$loggedInUser":staff "$awsPath"
+
+    echo "Permission untuk .aws telah diubah menjadi read & write (tanpa 'Custom') untuk $loggedInUser."
 else
     echo "Folder .aws tidak ditemukan untuk user $loggedInUser."
 fi
