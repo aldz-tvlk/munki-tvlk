@@ -38,7 +38,7 @@
                     <key>input_path</key>
                     <string>/Volumes/Realm Studio 15.2.1/Realm Studio.app</string>
                     <key>requirement</key>
-                    <string>identifier "io.realm.studio" and anchor apple generic and certificate leaf[subject.OU] = "4XWMY46275"</string>
+                    <string>identifier "com.mongodb.realm-studio" and anchor apple generic and certificate leaf[subject.OU] = "4XWMY46275"</string>
                 </dict>
             </dict>
         </array>
