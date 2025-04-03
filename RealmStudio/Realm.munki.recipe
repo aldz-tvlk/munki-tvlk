@@ -9,7 +9,7 @@
         <key>MinimumVersion</key>
         <string>0.2.3</string>
         <key>ParentRecipe</key>
-        <string>com.github.munki-tvlk.download.Realm</string>
+        <string>com.github.munki-tvlk.download.RealmStudio</string>
         <key>Input</key>
         <dict>
             <key>MUNKI_REPO_SUBDIR</key>
@@ -25,7 +25,7 @@
                 <key>category</key>
                 <string>Communication</string>
                 <key>description</key>
-                <string>Realm is apps for help for enggineer work</string>
+                <string>Realm is database tools apps for help for enggineer DB</string>
                 <key>display_name</key>
                 <string>Realm Studio</string>
                 <key>name</key>
