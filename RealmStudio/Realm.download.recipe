@@ -36,7 +36,7 @@
                 <key>Arguments</key>
                 <dict>
                     <key>input_path</key>
-                    <string>%pathname%</string>
+                    <string>/Volumes/Realm Studio 15.2.1/Realm Studio.app</string>
                     <key>expected_authority_names</key>
                     <array>
                         <string>Developer ID Application: MongoDB, Inc. (4XWMY46275)</string>
