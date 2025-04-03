@@ -30,6 +30,17 @@
                 <key>Processor</key>
                 <string>EndOfCheckPhase</string>
             </dict>
+            <dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_path</key>
+                    <string>/Volumes/Realm Studio 15.2.1/Realm Studio.app</string>
+                    <key>requirement</key>
+                    <string>identifier "io.realm.studio" and anchor apple generic and certificate leaf[subject.OU] = "4XWMY46275"</string>
+                </dict>
+            </dict>
         </array>
     </dict>
 </plist>
