@@ -5,13 +5,13 @@
         <key>Description</key>
         <string>Downloads the latest version of Realm dmg from Realm Studio.</string>
         <key>Identifier</key>
-        <string>com.github.munki-tvlk.download.Realm</string>
+        <string>com.github.munki-tvlk.download.RealmStudio</string>
         <key>MinimumVersion</key>
         <string>0.6.0</string>
         <key>Input</key>
         <dict>
             <key>NAME</key>
-            <string>Realm</string>
+            <string>Realm Studio</string>
         </dict>
         <key>Process</key>
         <array>
@@ -24,11 +24,30 @@
                     <string>https://studio-releases.realm.io/latest/download/mac-dmg</string>
                     <key>filename</key>
                     <string>%NAME%.dmg</string>
+                    <key>curl_opts</key>
+                    <array>
+                        <string>--no-alpn</string>
+                    </array>
                 </dict>
             </dict>
             <dict>
                 <key>Processor</key>
                 <string>EndOfCheckPhase</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>CodeSignatureVerifier</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_path</key>
+                    <string>%pathname%</string>
+                    <key>expected_authority_names</key>
+                    <array>
+                        <string>Developer ID Application: MongoDB, Inc. (4XWMY46275)</string>
+                        <string>Developer ID Certification Authority</string>
+                        <string>Apple Root CA</string>
+                    </array>
+                </dict>
             </dict>
         </array>
     </dict>
