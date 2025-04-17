@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://localhost/" href="test.jnlp">
+  <information>
+    <title>Test JNLP</title>
+    <vendor>Contoh Vendor</vendor>
+    <description>Dummy JNLP File</description>
+  </information>
+  <resources>
+    <j2se version="1.8+" />
+    <jar href="dummy.jar" />
+  </resources>
+  <application-desc main-class="com.example.MainClass"/>
+</jnlp>
