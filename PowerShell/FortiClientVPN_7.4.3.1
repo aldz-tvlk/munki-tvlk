@@ -1,0 +1,38 @@
+# FortiClient 7.4.3.1
+
+$ExeFileName = "FortiClientVPNSetup_7.4.3.1790_x64.exe"
+$installerPath = "C:\APP\"
+
+# Ensure the target user folder exists or create it if necessary
+if (-Not (Test-Path -Path $installerPath)) {
+    Write-Host "Creating user folder: $installerPath"
+    New-Item -Path $installerPath -ItemType Directory -Force
+}
+
+# Download URL
+$Url = "https://nxs.traveloka.work/repository/Msi_repo/FortiClientVPN/" + $ExeFileName
+$Username = 'nx-anonymous'
+$Password = 'S0natype22!!'
+$SecPassword = ConvertTo-SecureString $Password -AsPlainText -Force
+$CredObject = New-Object System.Management.Automation.PSCredential ($Username, $SecPassword)
+$ExeFilePath = $installerPath + $ExeFileName
+
+# Download file
+Write-Host "Downloading $ExeFileName..."
+try {
+    Invoke-WebRequest -UseBasicParsing -Uri $Url -OutFile $ExeFilePath -Credential $CredObject
+    Write-Host "Download successful: $ExeFilePath"
+} catch {
+    Write-Host "Failed to download file: $_"
+    exit 1
+}
+
+# Ensure the file is downloaded before starting installation
+if (Test-Path $ExeFilePath) {
+    Write-Host "Starting installation..."
+    Start-Process -Wait -FilePath $ExeFilePath -ArgumentList "/quiet /norestart"
+    Write-Host "Installation completed."
+} else {
+    Write-Host "Error: File not found after download attempt."
+}
+Start-Sleep -Seconds (10 * 60)
