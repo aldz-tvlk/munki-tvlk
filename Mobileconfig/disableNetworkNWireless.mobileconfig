@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>PayloadContent</key>
+        <array>
+            <dict>
+                <key>PayloadDescription</key>
+                <string>Disables Networking and Wireless system service in Location Services and
+                    locks the UI toggle.</string>
+                <key>PayloadDisplayName</key>
+                <string>Location Services - Disable Networking and Wireless (Forced)</string>
+                <key>PayloadIdentifier</key>
+                <string>com.jumpcloud.locationservices.networkingwireless.forced</string>
+                <key>PayloadType</key>
+                <string>com.apple.MCX</string>
+                <key>PayloadUUID</key>
+                <string>3F2D1234-ABCD-4EF1-890A-1234567890AC</string>
+                <key>PayloadVersion</key>
+                <integer>1</integer>
+                <key>mcx_preference_settings</key>
+                <dict>
+                    <key>com.apple.locationmenu</key>
+                    <dict>
+                        <key>Forced</key>
+                        <array>
+                            <dict>
+                                <key>mcx_preference_settings</key>
+                                <dict>
+                                    <key>LocationServicesEnabled</key>
+                                    <true />
+                                    <key>SystemServicesEnabled</key>
+                                    <dict>
+                                        <key>com.apple.network.identification</key>
+                                        <false />
+                                    </dict>
+                                </dict>
+                            </dict>
+                        </array>
+                        <key>Set-Once</key>
+                        <false />
+                        <key>Always-Enforce</key>
+                        <true />
+                    </dict>
+                </dict>
+            </dict>
+            <dict>
+                <key>PayloadDescription</key>
+                <string>Privacy preferences for Location Services system services, specifically
+                    restricting Networking and Wireless.</string>
+                <key>PayloadDisplayName</key>
+                <string>Privacy - Location Services System Services (Restricted)</string>
+                <key>PayloadIdentifier</key>
+                <string>com.jumpcloud.privacy.locationservices.systemservices.restricted</string>
+                <key>PayloadType</key>
+                <string>com.apple.TCC.configuration-profile-policy</string>
+                <key>PayloadUUID</key>
+                <string>4E5F1234-BCDE-4567-9012-ABCDEF123457</string>
+                <key>PayloadVersion</key>
+                <integer>1</integer>
+                <key>Services</key>
+                <dict>
+                    <key>Location</key>
+                    <array>
+                        <dict>
+                            <key>Allowed</key>
+                            <false />
+                            <key>BundleIdentifier</key>
+                            <string>com.apple.network.identification</string>
+                            <key>CodeRequirement</key>
+                            <string>identifier &#34;com.apple.network.identification&#34; and anchor
+                                apple</string>
+                        </dict>
+                    </array>
+                </dict>
+            </dict>
+        </array>
+        <key>PayloadDisplayName</key>
+        <string>Disable Networking &amp; Wireless in Location Services (Enforced)</string>
+        <key>PayloadIdentifier</key>
+        <string>com.jumpcloud.mdm.custom-policy.a882f665-1a1c-53a3-9c75-4cb9df1515ee.enforced</string>
+        <key>PayloadOrganization</key>
+        <string>IT Department</string>
+        <key>PayloadRemovalDisallowed</key>
+        <true />
+        <key>PayloadScope</key>
+        <string>System</string>
+        <key>PayloadType</key>
+        <string>Configuration</string>
+        <key>PayloadUUID</key>
+        <string>a882f665-1a1c-53a3-9c75-4cb9df1515ef</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+    </dict>
+</plist>
